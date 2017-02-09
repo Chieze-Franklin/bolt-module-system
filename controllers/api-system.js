@@ -10,8 +10,6 @@ module.exports = {
 		response.redirect('/api/help');
 	},
 	getHelp: function(request, response){
-		console.log(request.reqid);
-
 		var system = {
 			name: config.getName(),
 			friendlyName: config.getFriendlyName(),
@@ -32,7 +30,7 @@ module.exports = {
 		process.exit();
 	},
 	postExitCode: function(request, response){
-		var code = parseFloat(utils.String.trim(request.params.code));//TODO: check for parseInt: replace here, bolt.js, ctl-sms-home
+		var code = parseInt(utils.String.trim(request.params.code), 10);
 		process.exit(code);
 	},
 	postReset: function(request, response){
