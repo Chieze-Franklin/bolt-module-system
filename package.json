@@ -1,6 +1,6 @@
 {
   "name": "bolt-module-system",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Module to install /api/system routes in Bolt",
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
   "bolt": {
     "displayName": "Bolt System Module",
     "module": true,
+    "system": true,
     "routers": {
       "bolt-api-system": {
         "main": "routers/api-system",
