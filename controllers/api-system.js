@@ -34,38 +34,13 @@ module.exports = {
 		process.exit(code);
 	},
 	postReset: function(request, response){
-		var dropBoltDB = function() {
-			mongoose.connection.db.dropDatabase(function(error, result){
-				if (!utils.Misc.isNullOrUndefined(error)) {
-					response.end(utils.Misc.createResponse(null, error));
-				}
-				else {
-					response.send(utils.Misc.createResponse(result));
-					//TODO: consider shutting down Bolt here if result==true (the system is highly unstable here and should be restarted)
-				}
-			});
-		}
-
-		//app dbs
-		models.collection.find({}, function(err, collections){
-			if (!utils.Misc.isNullOrUndefined(collections) && collections.length > 0) {
-				collections.forEach(function(coll, index){
-					var dbName = coll.app;
-					var MongoClient = mongodb.MongoClient;
-					MongoClient.connect('mongodb://localhost:' + config.getDbPort() + '/' + dbName, function(error, db) {
-						db.dropDatabase(function(err, result){
-							db.close();
-
-							//after the last app's db has been dropped
-							if(index == (collections.length - 1)) {
-								dropBoltDB();
-							}
-						});
-					});
-				});
+		mongoose.connection.db.dropDatabase(function(error, result){
+			if (!utils.Misc.isNullOrUndefined(error)) {
+				response.end(utils.Misc.createResponse(null, error));
 			}
-			else { //if there's no collection just go ahead and delete bolt db
-				dropBoltDB();
+			else {
+				response.send(utils.Misc.createResponse(result));
+				//TODO: consider shutting down Bolt here if result==true (the system is highly unstable here and should be restarted)
 			}
 		});
 	},
