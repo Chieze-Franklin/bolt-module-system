@@ -16,10 +16,12 @@ router.get('/help', apiSystemCtrlr.getHelp);
 //TODO: GET: /help/:endpoint //returns the description of an endpoint
 //TODO: GET: /help/:endpoint/:version //returns the description of a version of an endpoint
 
+//TODO: consider adding checksCtrlr.forSystemApp
+
 router.post('/exit', checksCtrlr.forAdminRight, apiSystemCtrlr.postExit);
 router.post('/exit/:code', checksCtrlr.forAdminRight, apiSystemCtrlr.postExitCode);
 
-router.post('/reset', checksCtrlr.forUserPermToReset, apiSystemCtrlr.postReset);
-router.post('/reset/:collection', checksCtrlr.forUserPermToReset, apiSystemCtrlr.postResetCollection);
+router.post('/reset', checksCtrlr.forAdminRight, apiSystemCtrlr.postReset);
+router.post('/reset/:collection', checksCtrlr.forAdminRight, apiSystemCtrlr.postResetCollection);
 
 module.exports = router;
