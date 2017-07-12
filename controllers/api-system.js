@@ -27,7 +27,7 @@ module.exports = {
 		response.send(utils.Misc.createResponse(system));
 	},
 	postExit: function(request, response){
-		utils.Events.fire('system-exiting', { body: {} }, request.appToken, function(eventError, eventResponse){
+		utils.Events.fire('system-exiting', { body: {} }, request.bolt.token, function(eventError, eventResponse){
 			//TODO: it may be possible for some apps to hold something like a lock, preventing the system from shutting down
 			//wait a few seconds before shutting down
 			setTimeout(function(){
@@ -37,7 +37,7 @@ module.exports = {
 	},
 	postExitCode: function(request, response){
 		var code = parseInt(utils.String.trim(request.params.code), 10);
-		utils.Events.fire('system-exiting', { body: { code: code } }, request.appToken, function(eventError, eventResponse){
+		utils.Events.fire('system-exiting', { body: { code: code } }, request.bolt.token, function(eventError, eventResponse){
 			//TODO: it may be possible for some apps to hold something like a lock, preventing the system from shutting down
 			//wait a few seconds before shutting down
 			setTimeout(function(){
@@ -46,7 +46,7 @@ module.exports = {
 		});
 	},
 	postReset: function(request, response){
-		utils.Events.fire('system-db-resetting', { body: {} }, request.appToken, function(eventError, eventResponse){
+		utils.Events.fire('system-db-resetting', { body: {} }, request.bolt.token, function(eventError, eventResponse){
 			//wait a few seconds before resetting
 			setTimeout(function(){
 				mongoose.connection.db.dropDatabase(function(error, result){
@@ -63,7 +63,7 @@ module.exports = {
 	},
 	postResetCollection: function(request, response){
 		var collection = utils.String.trim(request.params.collection);
-		utils.Events.fire('system-collection-resetting', { body: { collection: collection } }, request.appToken, function(eventError, eventResponse){
+		utils.Events.fire('system-collection-resetting', { body: { collection: collection } }, request.bolt.token, function(eventError, eventResponse){
 			//wait a few seconds before resetting
 			setTimeout(function(){
 				mongoose.connection.db.dropCollection(collection, function(error, result){
