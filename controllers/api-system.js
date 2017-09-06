@@ -5,6 +5,25 @@ var models = require("bolt-internal-models");
 var mongodb = require('mongodb');
 var mongoose = require('mongoose');
 
+var Git = require('nodegit');
+var open = Git.Repository.open;
+
+function pullBolt(repositoryPath, remoteName, branch, callback) {
+	var repository;
+    var remoteBranch = remoteName + '/' + branch;
+    open(repositoryPath)
+        .then(function (_repository) {
+            repository = _repository;
+            return repository.fetch(remoteName);
+        }, callback)
+        .then(function () {
+            return repository.mergeBranches(branch, remoteBranch);
+        }, callback)
+        .then(function (oid) {
+            callback(null, oid);
+        }, callback);
+}
+
 module.exports = {
 	get: function(request, response){
 		response.redirect('/api/help');
@@ -75,6 +94,93 @@ module.exports = {
 					}
 				});
 			}, 4000);
+		});
+	},
+	postSync: function(request, response){
+		utils.Events.fire('system-syncing', { body: {} }, request.bolt.token, function(eventError, eventResponse){
+			//wait a few seconds
+			setTimeout(function(){
+				//sync db
+				//sync bolt
+			}, 2000);
+		});
+	},
+	postSyncBolt: function(request, response){
+		utils.Events.fire('system-bolt-syncing', { body: {} }, request.bolt.token, function(eventError, eventResponse){
+			//wait a few seconds
+			setTimeout(function(){
+				//pull bolt
+				//push bolt
+			}, 2000);
+		});
+	},
+	postSyncDB: function(request, response){
+		utils.Events.fire('system-db-syncing', { body: {} }, request.bolt.token, function(eventError, eventResponse){
+			//wait a few seconds
+			setTimeout(function(){
+				//push db
+			}, 2000);
+		});
+	},
+	postPush: function(request, response){
+		utils.Events.fire('system-pushing', { body: {} }, request.bolt.token, function(eventError, eventResponse){
+			//wait a few seconds
+			setTimeout(function(){
+				//push db
+				//push bolt
+			}, 2000);
+		});
+	},
+	postPushBolt: function(request, response){
+		utils.Events.fire('system-bolt-pushing', { body: {} }, request.bolt.token, function(eventError, eventResponse){
+			//wait a few seconds
+			setTimeout(function(){
+				//push bolt
+			}, 2000);
+		});
+	},
+	postPushDB: function(request, response){
+		utils.Events.fire('system-db-pushing', { body: {} }, request.bolt.token, function(eventError, eventResponse){
+			//wait a few seconds
+			setTimeout(function(){
+				//push db
+			}, 2000);
+		});
+	},
+	postPull: function(request, response){
+		utils.Events.fire('system-pulling', { body: {} }, request.bolt.token, function(eventError, eventResponse){
+			//wait a few seconds
+			setTimeout(function(){
+				//pull db
+				//pull bolt
+			}, 2000);
+		});
+	},
+	postPullBolt: function(request, response){
+		utils.Events.fire('system-bolt-pulling', { body: {} }, request.bolt.token, function(eventError, eventResponse){
+			//wait a few seconds
+			setTimeout(function(){
+				/*Git.Clone("https://git.heroku.com/guarded-journey-25495.git", "C:\\Users\\frank\\Documents\\Node.js\\bolt\\test_nodegit").then(function(repository) {
+				  // Work with the repository object here.
+				  console.log(repository)
+				  response.send();
+				});*/
+				pullBolt('C:\\Users\\frank\\Documents\\Node.js\\bolt\\test_nodegit', 'heroku', 'master', function(errFetch, oid) {
+				    if (errFetch) {console.log('errFetch');console.log(errFetch);
+				        //return errFetch;
+				    }
+				    console.log('oid');console.log(oid);
+				    response.send();
+				});
+			}, 2000);
+		});
+	},
+	postPullDB: function(request, response){
+		utils.Events.fire('system-db-pulling', { body: {} }, request.bolt.token, function(eventError, eventResponse){
+			//wait a few seconds
+			setTimeout(function(){
+				//pull db
+			}, 2000);
 		});
 	}
 };

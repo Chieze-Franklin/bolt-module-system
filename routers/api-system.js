@@ -24,4 +24,16 @@ router.post('/exit/:code', checksCtrlr.forAdminRight, apiSystemCtrlr.postExitCod
 router.post('/reset', checksCtrlr.forAdminRight, apiSystemCtrlr.postReset);
 router.post('/reset/:collection', checksCtrlr.forAdminRight, apiSystemCtrlr.postResetCollection);
 
+router.post('/sync', checksCtrlr.forAdminRight, apiSystemCtrlr.postSync);
+router.post('/sync-bolt', checksCtrlr.forAdminRight, apiSystemCtrlr.postSyncBolt);
+router.post('/sync-db', checksCtrlr.forAdminRight, apiSystemCtrlr.postSyncDB);
+
+router.post('/push', checksCtrlr.forAdminRight, apiSystemCtrlr.postPush);
+router.post('/push-bolt', checksCtrlr.forAdminRight, apiSystemCtrlr.postPushBolt);
+router.post('/push-db', checksCtrlr.forAdminRight, apiSystemCtrlr.postPushDB);
+
+router.post('/pull', checksCtrlr.forAdminRight, apiSystemCtrlr.postPull);
+router.post('/pull-bolt', checksCtrlr.forAdminRight, apiSystemCtrlr.postPullBolt);
+router.post('/pull-db', checksCtrlr.forAdminRight, apiSystemCtrlr.postPullDB);
+
 module.exports = router;

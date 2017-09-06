@@ -1,6 +1,6 @@
 {
   "name": "bolt-module-system",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "Module to install /api/system routes in Bolt",
   "repository": {
     "type": "git",
@@ -19,7 +19,8 @@
     "bolt-internal-models": "*",
     "bolt-internal-schemata": "*",
     "bolt-internal-setup": "*",
-    "bolt-internal-utils": "*"
+    "bolt-internal-utils": "*",
+    "nodegit": "^0.18.3"
   },
   "keywords": [
     "bolt",
